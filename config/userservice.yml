@@ -1,0 +1,11 @@
+rabbitmq:
+  host: localhost
+  port: 5672
+
+  queue: userservice
+  exchange: userservice.all
+  binds:
+    - pdfservice
+
+logger:
+  name: rabbitmq  

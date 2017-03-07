@@ -1,0 +1,13 @@
+rabbitmq:
+  host: localhost
+  port: 5672
+
+  queue: tadaservice
+  exchange: tadaservice.all
+  events:
+    binds:
+      - "user.delete"
+      - "pdf.generate"
+
+logger:
+  name: rabbitmq  

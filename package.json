@@ -1,0 +1,20 @@
+{
+  "name": "rabbit-mq-talk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.5.1",
+    "bluebird": "^3.4.7",
+    "bunyan": "^1.8.5",
+    "config": "^1.25.1",
+    "js-yaml": "^3.8.2",
+    "lodash": "^4.17.4",
+    "uuid": "^3.0.1"
+  }
+}
