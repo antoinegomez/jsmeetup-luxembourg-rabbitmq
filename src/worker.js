@@ -1,13 +1,14 @@
 'use strict';
 
-const RabbitMQ = require('./lib/rabbit');
-const dispatcher = RabbitMQ.Dispatcher;
-const logger = require('./lib/logger');
+const RabbitMQ = require('../lib/rabbit');
+const logger = require('../lib/logger');
 const init = require('./init');
 
-init().then(({ rabbit, queues }) => {
-  queues.service.consume({ dispatcher });
-  queues.process.consume({ dispatcher });
+const dispatcher = RabbitMQ.Dispatcher;
+
+init.boot().then(({ rabbit, queues }) => {
+  // queues.service.consume({ dispatcher });
+  // queues.process.consume({ dispatcher });
 
   // Create new channel for our worker
   const channel = new RabbitMQ.Channel({ connection: rabbit.getConnection() });
@@ -22,7 +23,7 @@ init().then(({ rabbit, queues }) => {
         ch,
         options: {
           durable: true,
-        }
+        },
       });
       return worker.assert().then(() => worker);
     })
@@ -30,4 +31,3 @@ init().then(({ rabbit, queues }) => {
       worker.consume({ dispatcher });
     });
 });
-

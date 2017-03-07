@@ -4,8 +4,6 @@ rabbitmq:
 
   queue: userservice
   exchange: userservice.all
-  binds:
-    - pdfservice
 
 logger:
-  name: rabbitmq  
+  name: userservice

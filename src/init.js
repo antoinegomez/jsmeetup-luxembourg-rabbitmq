@@ -3,15 +3,11 @@
 // Init connection to RabbitMQ
 
 const config = require('config');
-const Logger = require('./lib/logger');
-const RabbitMQ = require('./lib/rabbit');
-const dispatcher = require('./lib/rabbit/Dispatcher');
-const logger = require('./lib/logger');
+const logger = require('../lib/logger');
+const RabbitMQ = require('../lib/rabbit');
 const os = require('os');
 const uuid = require('uuid');
 const Promise = require('bluebird');
-
-
 
 // Create service queue
 const initServiceQueue = ({ rabbit }) => {
@@ -21,7 +17,7 @@ const initServiceQueue = ({ rabbit }) => {
     ch: rabbit.getDefaultChannel(),
     options: {
       durable: true, // survive process restart
-    }
+    },
   });
 
   return queue.assert();
@@ -39,7 +35,7 @@ const initProcessQueue = ({ rabbit }) => {
       durable: false, // survive process restart
       autoDelete: true,
       exclusive: true,
-    }
+    },
   });
 
   return queue.assert();
@@ -54,7 +50,7 @@ const initServiceExchange = ({ rabbit, queue }) => {
     type: 'fanout',
     options: {
       durable: true,
-    }
+    },
   });
 
   // Bind process queue to exchange with routingKeys
@@ -71,30 +67,38 @@ const initEventsExchange = ({ rabbit, queue }) => {
     type: 'topic',
     options: {
       durable: true,
-    }
+    },
   });
 
   // Bind service queue to exchange with routingKeys
   return exchange.assert()
-    .then(() => config.has('rabbitmq.events.binds') ? Promise.all(config.get('rabbitmq.events.binds').map(routingKey => queue.bind({ exchange, routingKey }))) : null);
+    .then(() =>
+      config.has('rabbitmq.events.binds') ?
+        Promise.all(config.get('rabbitmq.events.binds').map(routingKey => queue.bind({ exchange, routingKey }))) :
+        null);
 };
 
 // Connect
 // Create queues
 // Create exchanges and bind
-module.exports = () => {
+module.exports.boot = () => {
   const rabbit = new RabbitMQ.Connection({ logger });
   return rabbit.connect(config.get('rabbitmq'))
     .then(() => Promise.props({
-        service: initServiceQueue({ rabbit }),
-        process: initProcessQueue({ rabbit }),
-      }))
-    .then((queues) => Promise.props({
+      service: initServiceQueue({ rabbit }),
+      process: initProcessQueue({ rabbit }),
+    }))
+    .then(queues => Promise.props({
       service: initServiceExchange({ rabbit, queue: queues.process }),
       events: initEventsExchange({ rabbit, queue: queues.service }),
-    }).then((exchanges) => ({
+    }).then(exchanges => ({
       queues,
       exchanges,
       rabbit,
     })));
 };
+
+module.exports.initEventsExchange = initEventsExchange;
+module.exports.initServiceExchange = initServiceExchange;
+module.exports.initServiceQueue = initServiceQueue;
+module.exports.initProcessQueue = initProcessQueue;

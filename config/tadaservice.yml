@@ -6,8 +6,8 @@ rabbitmq:
   exchange: tadaservice.all
   events:
     binds:
-      - "user.delete"
-      - "pdf.generate"
+      - "user.deleted"
+      - "pdf.generated"
 
 logger:
-  name: rabbitmq  
+  name: tadaservice

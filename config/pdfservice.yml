@@ -6,4 +6,4 @@ rabbitmq:
   exchange: pdfservice.all
 
 logger:
-  name: rabbitmq  
+  name: pdfservice  
