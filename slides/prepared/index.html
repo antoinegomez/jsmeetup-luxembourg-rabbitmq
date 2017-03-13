@@ -6,6 +6,11 @@
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="shower/themes/ribbon/styles/screen-16x10.css">
+	<style>
+		.center {
+			text-align: center;
+		}
+	</style>
 </head>
 <body class="shower list">
 
@@ -17,188 +22,204 @@
 		<h2>RabbitMQ nodejs integration at Tadaweb</h2>
 		<p><a href="http://twitter.com/antoineg">@antoineg</a></p>
 		<figure>
-			<img class="cover" src="pictures/cover.jpg" alt="Hands on the orange typewriter in a park">
-			<figcaption class="white">
-				<a href="http://fiftyfootshadows.net/">© John Carey</a>
-			</figcaption>
+			<img class="cover" src="pictures/primary.png" alt="Tadaweb">
 		</figure>
 		<style>
+			#cover img {
+				opacity: 0.3;
+			}
+
 			#cover h2 {
 				margin:30px 0 0;
-				color:#FFF;
+				color:#333;
 				text-align:center;
 				font-size:70px;
 				}
 			#cover p {
 				margin:10px 0 0;
 				text-align:center;
-				color:#FFF;
+				color:#333;
 				font-style:italic;
 				font-size:20px;
 				}
 				#cover p a {
-					color:#FFF;
+					color:#666;
 					}
 		</style>
 	</section>
 
 	<section class="slide">
-		<h2>Shower key features</h2>
+		<h2>AMQP 0-9-1</h2>
 		<ol>
-			<li>Built on HTML, CSS and vanilla JavaScript</li>
-			<li>Works in all modern browsers</li>
-			<li>Themes are separated from engine</li>
-			<li>Modular and extensible</li>
-			<li>Fully keyboard accessible</li>
-			<li>Printable to PDF</li>
+			<li>Advanced Message Queuing Protocol</li>
+			<li>Allow communication between publishers and consumers</li>
+			<li>Programmable Protocol</li>
 		</ol>
-		<p class="note">Shower ['ʃəuə] noun. A person or thing that shows.</p>
+		<!-- <p class="note">Shower ['ʃəuə] noun. A person or thing that shows.</p> -->
 	</section>
 
 	<section class="slide">
-		<h2>Plain text on your slides</h2>
-		<p>Lorem ipsum dolor sit amet, consectetur <a href="#4">adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, <em>quis nostrud</em> exercitation ullamco laboris <strong>nisi ut aliquip</strong> ex ea commodo consequat. Duis aute irure <i>dolor</i> in reprehenderit in voluptate velit esse cillum <b>dolore</b> eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in <code>&lt;culpa&gt;</code> qui officia deserunt mollit anim id est laborum.</p>
+		<h2>Concepts</h2>
+		<ul>
+			<li>Publisher</li>
+			<li>Consumer</li>
+			<li>Exchange</li>
+			<li>Routing key</li>
+			<li>Queue</li>
+			<li>Channel</li>
+		</ul>
+		<!-- <p class="note">Documentation: <a href="http://www.squaremobius.net/amqp.node/channel_api.html">http://www.squaremobius.net/amqp.node/channel_api.html</a></p> -->
 	</section>
 
 	<section class="slide">
-		<h2>Two columns if you like</h2>
-		<p class="double">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
-	</section>
-
-	<section class="slide">
-		<h2>All kind of lists</h2>
-		<ol>
-			<li>Simple lists are marked with bullets</li>
-			<li>Ordered lists begin with a number</li>
-			<li>You can even nest lists one inside another
-				<ul>
-					<li>Or mix their types</li>
-					<li>But do not go too far</li>
-					<li>Otherwise audience will be bored</li>
-				</ul>
-			</li>
-			<li>Look, seven rows exactly!</li>
-		</ol>
-	</section>
-
-	<section class="slide">
-		<h2>Serious citations</h2>
 		<figure>
-			<blockquote>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
-			</blockquote>
-			<figcaption>Marcus Tullius Cicero</figcaption>
+			<img class="picture" src="pictures/hello-world-example-routing.png" alt="Tadaweb">
 		</figure>
 	</section>
 
+
 	<section class="slide">
-		<h2>Code samples</h2>
+		<h2>Default exchange</h2>
+		<p>
+			You always send a message to an exchange.<br>
+			Used to send a message directly to a queue, without any special routing involved.
+		</p>
+	</section>
+
+	<section class="slide">
+		<h2>amqplib</h2>
+		<ul>
+			<li>Promise or callback API</li>
+			<li>Good documentation</li>
+			<li>Stable</li>
+			<li>Channel oriented API</li>
+		</ul>
+		<p class="note">Documentation: <a href="http://www.squaremobius.net/amqp.node/channel_api.html">http://www.squaremobius.net/amqp.node/channel_api.html</a></p>
+	</section>
+
+	<section class="slide">
+		<h2>Channels</h2>
+		<ul>
+			<li>Used to make all operations</li>
+			<li>Messages (aka prefetch) per channel or consumer</li>
+			<li>An error in one operation can bork it</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<h2>Connecting and creating channel</h2>
 		<pre>
-			<code>&lt;!DOCTYPE html&gt;</code>
-			<code class="mark">&lt;html lang="en"&gt;</code>
+			<code>var amqp = require('amqplib');</code>
+			<code>amqp.connect().then(function(conn) {</code>
+		  <code>&nbsp;&nbsp;conn.createChannel().then(ch => ...);</code>
+			<code>});</code>
+			<!-- <code class="mark">&lt;html lang="en"&gt;</code>
 			<code><mark>&lt;head&gt;</mark> <span class="comment">&lt;!--Comment--&gt;</span></code>
 			<code>    &lt;title&gt;Shower&lt;/title&gt;</code>
 			<code>    &lt;meta charset="<mark class="important">UTF-8</mark>"&gt;</code>
 			<code>    &lt;link rel="stylesheet" href="screen.css"&gt;</code>
-			<code><mark>&lt;/head&gt;</mark></code>
+			<code><mark>&lt;/head&gt;</mark></code> -->
 		</pre>
 	</section>
 
 	<section class="slide">
-		<h2>Even tables</h2>
-		<table>
-		<tr>
-			<th scope="col">Locavore</th>
-			<th>Umami</th>
-			<th>Helvetica</th>
-			<th>Vegan</th>
-		</tr>
-		<tr>
-			<th scope="row">Fingerstache</th>
-			<td>Kale</td>
-			<td>Chips</td>
-			<td>Keytar</td>
-		</tr>
-		<tr>
-			<th scope="row">Sriracha</th>
-			<td>Gluten-free</td>
-			<td>Ennui</td>
-			<td>Keffiyeh</td>
-		</tr>
-		<tr>
-			<th scope="row">Thundercats</th>
-			<td>Jean</td>
-			<td>Shorts</td>
-			<td>Biodiesel</td>
-		</tr>
-		<tr>
-			<th scope="row">Terry</th>
-			<td>Richardson</td>
-			<td>Swag</td>
-			<td>Blog</td>
-		</tr>
-		</table>
-		<p>It’s good to have information organized.</p>
+		<h2>Types of exchanges</h2>
+		<ul>
+			<li>direct</li>
+			<li>fanout</li>
+			<li>topic</li>
+			<li>headers</li>
+		</ul>
 	</section>
 
 	<section class="slide" id="picture">
-		<h2>Pictures</h2>
 		<figure>
-			<img class="cover" src="pictures/picture.jpg" alt="Orange typewriter on a wooden table close-up">
-			<figcaption class="white">
-				<a href="http://fiftyfootshadows.net/">© John Carey</a>
-			</figcaption>
+			<img class="cover" src="pictures/exchange-direct.png">
 		</figure>
-		<style>
-			#picture h2 {
-				color:#FFF;
-				}
-		</style>
+	</section>
+
+	<section class="slide" id="picture">
+		<figure>
+			<img class="cover" src="pictures/exchange-fanout.png">
+		</figure>
+	</section>
+
+	<section class="slide" id="picture">
+		<figure>
+			<h2 class="center">Topic exchange routing</h2>
+			<img class="cover" src="pictures/TopicExchange2.png">
+		</figure>
+	</section>
+
+	<section class="slide" id="picture">
+		<figure>
+			<h2>Headers exchange routing</h2>
+			<ul>
+				<li>Use headers to route messages</li>
+				<li>Ignore routing key</li>
+			</ul>
+		</figure>
 	</section>
 
 	<section class="slide">
-		<h2 class="shout shrink">You can even shout this way</h2>
+		<h2>Tadaweb micro services architecture</h2>
+		<figure>
+			<img class="picture" src="pictures/newInfra.png">
+		</figure>
 	</section>
 
 	<section class="slide">
-		<h2>Inner navigation</h2>
-		<ol>
-			<li>Lets you reveal list items one by one</li>
-			<li class="next">To keep some key points</li>
-			<li class="next">In secret from audience</li>
-			<li class="next">But it will work only once</li>
-			<li class="next">Nobody wants to see the same joke twice</li>
-		</ol>
+		<h2>Exchanges</h2>
+		<ul>
+			<li>One direct exchange to send events (services.events)</li>
+			<li>One fanout exchange per service (userservice.all)</li>
+		</ul>
 	</section>
 
-	<section class="slide grid">
-		<h2>All nicely aligned to grid</h2>
+	<section class="slide">
+		<h2>RabbitMQ at Tadaweb</h2>
+		<ul>
+			<li>Communication between web NodeJS services and Core C++ services</li>
+			<li>Events to update data in each service</li>
+			<li>Worker queues: PDF generation, long requests</li>
+		</ul>
 	</section>
 
-	<section class="slide" id="see-more">
-		<h2 class="shout">
-			<img src="pictures/logo.svg" alt="Shower logo">
-			<a href="https://github.com/shower/shower">See more on GitHub</a>
-		</h2>
-		<style>
-			#see-more h2 {
-				font-size:100px
-				}
-			#see-more img {
-				width:0.72em;
-				height:0.72em;
-				}
-		</style>
+	<section class="slide">
+		<h2>Queues</h2>
+		<ul>
+			<li>One queue per service (userservice) binded to the events exchange (services.events) with various routing keys</li>
+			<li>One queue per process (userservice_${hostname}_${pid}_${uuid.v4()}) to consume service exchange messages</li>
+		</ul>
 	</section>
 
-	<footer class="badge">
-		<a href="https://github.com/shower/shower">Fork me on GitHub</a>
-	</footer>
+	<section class="slide">
+		<h2>Custom queues</h2>
+		<ul>
+			<li>Worker queues (pdf.worker)</li>
+			<li>Dedicated channel with a custom prefetch count: 1 job at a time</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<h2>Samples</h2>
+		<ul>
+			<li>userservice bind his queue to services.events with routing key "tadaservice" to listen to events emitted from tadaservice</li>
+			<li>pdfservice receive a message on it's service queue and send it to a custom worker queue</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<h2>See it action</h2>
+		<p>Simple module created last week to test it</p>
+		<a href="https://github.com/antoinegomez/jsmeetup-luxembourg-rabbitmq">
+			https://github.com/antoinegomez/jsmeetup-luxembourg-rabbitmq
+		</a>
+	</section>
 
 	<div class="progress"></div>
 
 	<script src="shower/shower.min.js"></script>
 	<!-- Copyright © 2017 Yours Truly, Famous Inc. -->
-
 </body>
 </html>
